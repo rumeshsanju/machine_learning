@@ -1,0 +1,204 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <title>Player Rankings</title>
+    <style type="text/css">
+        .mid
+         {
+            background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url("/static/home.jpg");
+            background-position:center;
+            background-size:cover;
+            background-attachment:fixed;
+            padding:30px;
+            width:96%;
+            height:500px;
+            margin: 0 auto;
+            color:white;
+         }
+        #nav3
+        {
+          background-color:black;
+          border-radius:15px;
+        }
+        #scrollableContainer
+         {
+            max-height: 300px; 
+            width: 40%;
+            overflow: auto;
+            color:white; 
+            background-color: rgb(14, 2, 80);
+            position: relative;
+            left:400px;
+            text-align:center;
+            border-radius:15px;
+         }
+         .btn1
+		{
+		 width:200px;
+	     font-size:16px;
+	     padding:10px 5px;
+	     background-color:#000081;
+	     border-radius:20px;
+		 border:none;
+		 color:white; 
+		 position:relative;
+         left :600px;  
+		}
+        
+         .btn2 
+        {
+            width:200px;
+	        font-size:16px;
+	        padding:10px 5px;
+	        background-color:#000081;
+	        border-radius:20px;
+		    border:none;
+		    color:white; 
+		    position:relative;
+            left :480px;  
+            margin-top: 20px;
+        }
+
+        .btn1:hover,.btn2:hover
+		{
+		   color:black;
+		   border:white solid 4px;
+		   font-size:18px;
+			
+		} 
+
+        table {
+          margin-left: 160px; 
+          text-align: left; 
+          color: aqua;
+          font-size:20px;
+        }
+
+        .cate1
+        {
+            position:relative;
+            left :620px;
+            top: 15px;
+            margin-top: 10px;
+            font-size:24px;  
+            font-weight: 900;
+        }
+
+        .cate2
+        {   
+            position:relative;
+            left :480px;
+            margin-top: 20px;
+            font-size:18px; 
+            background-color:aqua;
+        }
+
+    </style>
+    
+</head>
+<div Class="header">
+    <h1 id="t1" align="center">Prediction and Ranking System</h1>
+    <ul>	   
+      <li><a class="nav" id="nav4"  href="{{ url_for('database') }}">Remove</a><li>
+      <li><a class="nav" id="nav3"  href="{{ url_for('ranking') }}">Ranking</a><li>
+      <li><a class="nav" id="nav2"  href="{{url_for('data')}}">Prediction</a><li></li>
+      <li><a class="nav" id="nav1"  href="{{ url_for('home') }}">Home</a><li>
+   </ul>
+</div>
+<div class="mid">
+    <h1 align="center">Ranking players in each category</h1>
+
+   
+    <form action="{{ url_for('generate_rankings') }}" method="POST">
+        <button class="btn1" type="submit">Rank players</button>
+    </form>
+   <div id="scrollableContainer">
+    {% if top_order_ranked %}
+    <h2>Top Order Batsmen</h2>
+    
+    <table cellspacing="15px" >
+        <tr>
+            <th>Rank</th>
+            <th>Player name</th>
+        </tr>
+        {% for player in top_order_ranked %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ player.name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+   
+    {% endif %}
+
+    {% if middle_order_ranked %}
+    <h2>Middle Order Batsmen</h2>
+    <table cellspacing="15px" >
+        <tr>
+            <th>Rank</th>
+            <th>Player name</th>
+        </tr>
+        {% for player in middle_order_ranked %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ player.name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if lower_order_ranked %}
+    <h2>Lower Order Batsmen</h2>
+    <table cellspacing="15px">
+        <tr>
+            <th>Rank</th>
+            <th>Player name</th>
+        </tr>
+        {% for player in lower_order_ranked %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ player.name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if tailender_ranked %}
+    <h2>Tailender Batsmen</h2>
+    <table cellspacing="15px" >
+        <tr>
+            <th>Rank</th>
+            <th>Player name</th>
+        </tr>
+        {% for player in tailender_ranked %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ player.name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+   </div>
+    {% if show_details_button %}
+    <!--form action="{{ url_for('display_details') }}" method="POST">
+        <label for="category" class="cate1">Select Category </label><br>
+        <select name="category" id="category" class="cate2">
+            <option value="top">Top Order Batsmen</option>
+            <option value="middle">Middle Order Batsmen</option>
+            <option value="low">Lower Order Batsmen</option>
+            <option value="tail">Tailender Batsmen</option>
+        </select>
+        <button type="submit" class="btn2">Show More Details</button>
+    </form-->
+  {% endif %}
+ 
+  </div>
+  <div class="footer">
+     <h3 align="center">Developed By Rumesh@Sanju</h3>
+  </div>
+
+</body>
+</html>
+

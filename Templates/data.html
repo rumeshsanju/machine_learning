@@ -1,0 +1,250 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  <style type="text/css">
+    .mid
+    {
+      background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url("/static/home.jpg");
+      background-position:center;
+      background-size:cover;
+      background-attachment:fixed;
+      padding:30px;
+      width:96%;
+      height:700px;
+      margin: 0 auto;
+      color:white;
+      font-size: 20px;
+   }
+
+    #nav2
+    {
+      background-color:black;
+      border-radius:15px;
+    }
+
+  .btn1
+		{
+		   width:100px;
+	     font-size:16px;
+	     padding:10px 5px;
+	     background-color:#000081;
+	     border-radius:20px;
+		   border:none;
+		   color:white; 
+		   position:relative;
+       left :550px;
+		   
+		 }
+
+     .btn1:hover
+		  {
+		  color:black;
+			border:white solid 4px;
+			font-size:18px;
+			
+		  }
+     .btn2
+		{
+		   width:100px;
+	     font-size:16px;
+	     padding:10px 5px;
+	     background-color:#000081;
+	     border-radius:20px;
+		   border:none;
+		   color:white; 
+		   position:relative;
+       left:550px;
+		   
+		 }
+     .btn3
+		{
+		   width:100px;
+	     font-size:16px;
+	     padding:10px 5px;
+	     background-color:#000081;
+	     border-radius:20px;
+		   border:none;
+		   color:white; 
+       position:relative;
+       left: 60px;
+       
+		   
+		 }
+     
+     .btn1:hover, .btn2:hover,.btn3:hover
+		  {
+		    color:black;
+			  border:white solid 4px;
+			  font-size:18px;
+		  }
+      
+      #prediction_p {
+       display: none;
+      }
+
+      #prediction_text
+      {
+         position: relative;
+         left:550px;
+      }
+
+      #table1
+      {
+        position: relative;
+         left:90px;
+      }
+
+      
+  </style>  
+</head>
+<body>
+  <div Class="header">
+    <h1 id="t1" align="center">Prediction and Ranking System</h1>
+    <ul>	   
+      <li><a class="nav" id="nav4"  href="{{ url_for('database') }}">Remove</a><li>
+      <li><a class="nav" id="nav3"  href="{{ url_for('ranking') }}">Ranking</a><li>
+      <li><a class="nav" id="nav2"  href="{{url_for('data')}}">Prediction</a><li></li>
+      <li><a class="nav" id="nav1"  href="{{ url_for('home') }}">Home</a><li>
+   </ul>
+ </div>
+ <div class="mid">
+  <form action="{{url_for('predict')}}" method="POST" name="form">
+    <center>
+      <h3>Enter Player Records</h3>
+      <table  cellspacing="30px">
+				<tr>
+					<td>Matches:<br><input type="text" name="Matches" size="30px" placeholder="type here"></td>
+				    <td>Innings:<br><input type="text" name="Innings"  size="30px" placeholder="type here"></td>
+					<td>Not outs:<br><input type="text" name="Not_outs" size="30px" placeholder="type here"></td>
+					<td>Runs:<br><input type="text" name="Runs" size="30px" placeholder="type here"></td>
+					<td>Higest Score:<br><input type="text" name="Higest_Score" size="30px" placeholder="type here"></td>
+				</tr>
+				<tr>
+					<td>Average:<br><input type="text" name="Average"  size="30px" placeholder="type here"></td>
+				    <td>Ball Faced:<br><input type="text" name="Ball_Faced" size="30px" placeholder="type here"></td>
+					<td>Strike Rate:<br><input type="text" name="Strike_Rate" size="30px" placeholder="type here"></td>
+					<td>Centures:<br><input type="text" name="Centures" size="30px" placeholder="type here"></td>
+					<td>Half-Centures:<br><input type="text" name="Half-Centures"  size="30px" placeholder="type here"></td>
+				</tr>
+				<tr>
+					<td>Ducks:<br><input type="text" name="Ducks" size="30px" placeholder="type here"></td>
+				    <td>Fours:<br><input type="text" name="Fours" size="30px" placeholder="type here"></td>
+					<td>Sixs:<br><input type="text" name="Sixs" size="30px" placeholder="type here"></td>
+					<td>Bowling Ability:<br>
+					     <select name="Bowling_Ability" style="width: 235px;"> 
+						    <option>0 </option>
+                <option>1</option>
+							  <option>2  </option>
+                <option>3</option>
+						 </select>
+					</td>
+					<td>Allround Ablity:<br>
+						<select name="Allround_Ablity" style="width: 235px;"> 
+						    <option>0</option>
+                <option>1</option>
+							  <option>2</option>
+                <option>3</option>
+							  <option>4</option>
+						 </select>
+					</td>
+				</tr>
+				</tr>
+					<td><input type="submit" name="submit" value="Predict" class="btn1">
+						<input type="reset" name="reset" value="Reset" onclick="resetForm()" class="btn2">
+					</td>
+				</tr>
+        
+				<tr>
+					<td><h4 id="prediction_text"></h4></td>
+					<td><h4 id="prediction_p"></h4></td>
+				</tr>
+      </center>
+    </table>
+  </form>
+ 
+
+  <!-- Hidden form for player name -->
+  <form action="{{url_for('save')}}" method="POST" name="save_form" style="display:none;">
+    <center>
+      <table cellspacing="30px" id="table1">
+        <tr>
+          <td >Player Name:<br><input type="text" name="player_name" size="30px" placeholder="Enter player name" required="required" id="player_name"></td>
+          <td><input type="hidden" name="prediction_prob" id="prediction_prob" value=""></td>
+          <td><input type="hidden" name="predicted_label" id="predicted_label" value=""></td>
+          <td><input type="hidden" name="top" id="top" value=""></td>
+          <td><input type="hidden" name="middle" id="middle" value=""></td>
+          <td><input type="hidden" name="low" id="low" value=""></td>
+          <td><input type="hidden" name="tail" id="tail" value=""></td>
+        </tr>
+        <tr>
+          <td><input type="submit" name="submit" value="Save" class="btn3"></td>
+        </tr>
+      </table>
+    </center>
+  </form>
+</div>
+<div class="footer">
+  <h3 align="center">Developed By Rumesh@Sanju</h3>
+
+</div>
+<script>
+  function resetForm() {
+    // Hide player name box, save button
+    document.getElementById("player_name").textContent = "";
+    document.forms["save_form"].style.display = "none";
+    
+    // Clear content of probability text boxes
+    document.getElementById("prediction_text").textContent = "";
+    document.getElementById("prediction_p").textContent = "";
+   
+  }
+    document.addEventListener("DOMContentLoaded", function() {
+      const predictionForm = document.forms["form"];
+      const playerNameForm = document.forms["save_form"];
+      const predictionText = document.getElementById("prediction_text");
+      const predictionProb = document.getElementById("prediction_p");
+      const predictionProbHidden = document.getElementById("prediction_prob");
+      const predictedLabelHidden = document.getElementById("predicted_label");
+      const toph = document.getElementById("top");
+      const middleh = document.getElementById("middle");
+      const lowh= document.getElementById("low");
+      const tailh = document.getElementById("tail");
+
+      predictionForm.addEventListener("submit", async function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        // Perform your prediction logic here
+        const response = await fetch('/predict', {
+          method: 'POST',
+          body: new FormData(predictionForm),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success) {
+            // Update the prediction text boxes
+            predictionText.textContent = result.prediction_text;
+            predictionProb.textContent = result.prediction_p;
+            
+            // Update hidden inputs for the save form
+            predictionProbHidden.value = result.prediction_p;
+            predictedLabelHidden.value = result.prediction_text;
+            toph.value = result.top
+            middleh.value = result.middle
+            lowh.value=result.low
+            tailh.value=result.tail
+
+            // Show the player name text box form
+            playerNameForm.style.display = "block";
+          } else {
+            alert('Prediction failed. Please check your input.');
+          }
+        } else {
+          alert('Prediction request failed.');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

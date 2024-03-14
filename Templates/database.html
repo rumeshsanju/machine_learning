@@ -1,0 +1,95 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <title>Database</title>
+    <style type="text/css">
+         .mid
+		   {
+		      background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url("/static/home.jpg");
+	          background-position:center;
+	          background-size:cover;
+	          background-attachment:fixed;
+			  padding:30px;
+			  width:96%;
+			  height:500px;
+			  margin: 0 auto;
+		   }
+          #nav4
+          {
+            background-color:black;
+            border-radius:15px;
+          }
+		  .btn1
+		  {
+		   width:220px;
+	       font-size:16px;
+	       padding:10px 5px;
+	       background-color:#000081;
+	       border-radius:20px;
+		   border:none;
+		   color:white; 
+		   position:relative;
+		   top:100px;
+		   left:580px;
+		  }
+		  .btn1:hover
+		  {
+		    color:black;
+			border:white solid 4px;
+			font-size:18px;
+			
+		  }
+          #scrollableContainer
+         {
+            max-height: 300px; 
+            width: 40%;
+            overflow: auto;
+            color:white; 
+            background-color: rgb(14, 2, 80);
+            position: relative;
+            left:400px;
+            text-align:center;
+            border-radius:15px;
+         }
+         table {
+          margin: 0 auto; 
+          text-align: left; 
+          color: aqua;
+          font-size:20px;
+        }
+        </style>
+</head>
+<body>
+    <div Class="header">
+        <h1 id="t1" align="center">Prediction and Ranking System</h1>
+        <ul>	   
+          <li><a class="nav" id="nav4"  href="{{ url_for('database') }}">Remove</a><li>
+          <li><a class="nav" id="nav3"  href="{{ url_for('ranking') }}">Ranking</a><li>
+          <li><a class="nav" id="nav2"  href="{{url_for('data')}}">Prediction</a><li></li>
+          <li><a class="nav" id="nav1"  href="{{ url_for('home') }}">Home</a><li>
+       </ul>
+   </div>
+
+  <div class="mid">
+    <div id="scrollableContainer">
+    <h1>Select players to Remove</h1>
+    <form action="{{ url_for('delete_players') }}" method="POST">
+        <table >
+            
+            {% for player in players %}
+            <tr>
+                <td><input type="checkbox" name="player_ids" value="{{ player.id }}"></td>
+                <td>{{ player.name }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+        <button type="submit" class="btn1">Delete Selected Players</button>
+    </form>
+ 
+ </div>
+ <div class="footer">
+    <h3 align="center">Developed By Rumesh@Sanju</h3>
+</div>
+</body>
+</html>

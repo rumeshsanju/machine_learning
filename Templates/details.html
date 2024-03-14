@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggestion</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <style type="text/css">
+         .mid
+		   {
+		      background-image:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url("/static/home.jpg");
+	          background-position:center;
+	          background-size:cover;
+	          background-attachment:fixed;
+			  padding:30px;
+			  width:96%;
+			  height:500px;
+			  margin: 0 auto;
+		   }
+          #nav3
+          {
+            background-color:black;
+            border-radius:15px;
+          }
+		  
+          #scrollableContainer
+         {
+            max-height: 300px; 
+            width: 40%;
+            overflow: auto;
+            color:white; 
+            background-color: rgb(14, 2, 80);
+            position: relative;
+            left:400px;
+            text-align:center;
+            border-radius:15px;
+         }
+         table {
+          margin: 0 auto; 
+          text-align: left; 
+          color: aqua;
+          font-size:20px;
+        }
+        </style>
+</head>
+<body>
+    <div Class="header">
+        <h1 id="t1" align="center">Prediction and Ranking System</h1>
+        <ul>	   
+          <li><a class="nav" id="nav4"  href="{{ url_for('database') }}">Remove</a><li>
+          <li><a class="nav" id="nav3"  href="{{ url_for('ranking') }}">Ranking</a><li>
+          <li><a class="nav" id="nav2"  href="{{url_for('data')}}">Prediction</a><li></li>
+          <li><a class="nav" id="nav1"  href="{{ url_for('home') }}">Home</a><li>
+       </ul>
+   </div>
+
+    
+    <div class="mid">
+        
+     <div id="scrollableContainer">
+        <h1>Suggestion for {{ category }} order</h1>
+      <table cellspacing="20px">
+        <tr>
+            <th>Rank</th>
+            <th>Player Name</th>
+            
+            
+            <!-- Add more details fields as needed -->
+        </tr>
+        {% for player in players %}
+        <tr>
+            <td>{{ loop.index}}</td>
+            <td>{{ player.name }}</td>
+            
+           
+            <!-- Add more details fields as needed -->
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+    </div>
+   
+  <div class="footer">
+     <h3 align="center">Developed By Rumesh@Sanju</h3>
+  </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+body
+		  {
+		   width:100hw;
+	       height:100%;
+		  }
+         ul
+		  {
+		    list-style-type:none;
+			margin:0;
+			padding:0;
+		  }
+		  
+		  li
+		  {
+		   float:right;
+		  }
+		  
+		  a.nav:link, a.nav:visited
+		  {
+		   display:block;
+		   width:95px;
+		   font-weight:blod;
+		   text-decoration:none;
+		   text-align:center;
+		   padding:4px;
+           color:white;
+		   font-size:18px;
+		   border:#000081 solid 4px;
+		  }
+		  a.nav:hover, a.nav:active
+		  {
+		    background-color:black;
+			border-radius:15px;
+			 border:#000081 solid 4px;
+		  }
+		  .header
+		  {
+		    background-color:#000081;
+			height: 100px;
+          }
+          #t1
+		  {
+		   position:relative;
+		   left:-40px;
+		   color:white;
+		  }
+
+          .footer
+		  {
+		    height:auto;
+			width:100%;
+			background-color:#000081;
+            color:white;
+            font-family: "Lucida Handwriting";
+			margin: 0;
+            padding: 0.05px 0;
+		  }
+        
